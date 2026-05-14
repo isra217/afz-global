@@ -1,12 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import {
+  motion,
+  AnimatePresence,
+  Variants,
+} from "framer-motion";
 
-/* ================= CLEAN CATEGORY SYSTEM ================= */
+import {
+  ChevronDown,
+  HelpCircle,
+} from "lucide-react";
 
-const categories = ["all", "payment", "services", "process", "how it works"];
+/* ================= CATEGORY SYSTEM ================= */
+
+const categories = [
+  "all",
+  "payment",
+  "services",
+  "process",
+  "how it works",
+];
 
 const categoryLabels: Record<string, string> = {
   all: "All",
@@ -25,52 +39,60 @@ const faqs = [
     a: "We offer Accounting, Company Formation, Website Development, App Development, and Social Media Management.",
     category: "services",
   },
+
   {
     id: 2,
     q: "Do you work with small businesses?",
     a: "Yes, startups, SMEs, and enterprises are all supported. We have packages tailored for every business size.",
     category: "services",
   },
+
   {
     id: 3,
     q: "What are your payment terms?",
-    a: "We offer milestone-based, upfront, and flexible installment options. A $300 deposit is required to start any project.",
+    a: "We offer milestone-based, upfront, and flexible installment options. A deposit is required before starting any project.",
     category: "payment",
   },
+
   {
     id: 4,
     q: "Do you offer refunds?",
-    a: "Yes, we offer a 72-hour full refund window if you're not satisfied with our initial consultation and quote.",
+    a: "Yes, we offer a refund window if you're not satisfied after the initial consultation phase.",
     category: "payment",
   },
+
   {
     id: 5,
     q: "How long does a website take?",
-    a: "Usually 7–14 days depending on complexity. For e-commerce sites, it may take 2-3 weeks.",
+    a: "Usually 7–14 days depending on complexity. E-commerce and custom systems may take longer.",
     category: "process",
   },
+
   {
     id: 6,
     q: "What is your development process like?",
-    a: "Discovery → Planning → Design → Development → Testing → Launch → Maintenance.",
+    a: "Discovery → Planning → UI/UX Design → Development → Testing → Launch → Maintenance.",
     category: "process",
   },
+
   {
     id: 7,
     q: "How does the AI automation work?",
-    a: "AI handles leads, scheduling, follow-ups, and CRM automation.",
+    a: "AI handles leads, scheduling, follow-ups, WhatsApp automation, and CRM workflows automatically.",
     category: "how it works",
   },
+
   {
     id: 8,
     q: "How do I get started with AFZ Global?",
-    a: "Fill the form, pay deposit, and get consultation within 24 hours.",
+    a: "Simply fill out the contact form and our team will reach out within 24 hours for consultation.",
     category: "how it works",
   },
+
   {
     id: 9,
     q: "Can you customize services?",
-    a: "Yes, all services are fully customizable for your business needs.",
+    a: "Yes, all our solutions are fully customized according to your business goals and industry.",
     category: "services",
   },
 ];
@@ -78,16 +100,29 @@ const faqs = [
 /* ================= ANIMATIONS ================= */
 
 const answerVariants: Variants = {
-  hidden: { opacity: 0, height: 0 },
+  hidden: {
+    opacity: 0,
+    height: 0,
+  },
+
   visible: {
     opacity: 1,
     height: "auto",
-    transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
+
+    transition: {
+      duration: 0.3,
+      ease: [0.4, 0, 0.2, 1],
+    },
   },
+
   exit: {
     opacity: 0,
     height: 0,
-    transition: { duration: 0.2, ease: [0.4, 0, 0.2, 1] },
+
+    transition: {
+      duration: 0.2,
+      ease: [0.4, 0, 0.2, 1],
+    },
   },
 };
 
@@ -98,109 +133,327 @@ const rotateIcon = {
 
 /* ================= COMPONENT ================= */
 
-export function FAQ() {
-  const [openId, setOpenId] = useState<number | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState("all");
+export default function FAQ() {
+  const [openId, setOpenId] =
+    useState<number | null>(null);
+
+  const [selectedCategory, setSelectedCategory] =
+    useState("all");
 
   const filtered =
     selectedCategory === "all"
       ? faqs
-      : faqs.filter((f) => f.category === selectedCategory);
+      : faqs.filter(
+          (f) => f.category === selectedCategory
+        );
 
   const toggleQuestion = (id: number) => {
     setOpenId(openId === id ? null : id);
   };
 
   return (
-    <section id="faq" className="py-28 bg-[#f8fafc] relative overflow-hidden">
+    <section
+      id="faq"
+      className="
+        relative
+        overflow-hidden
+        py-20
+        bg-[#f8fbff]
+      "
+    >
 
       {/* BACKGROUND GLOW */}
-      <div className="absolute -top-40 left-0 w-100 h-100 bg-cyan-200/30 blur-3xl rounded-full" />
-      <div className="absolute bottom-0 right-0 w-100 h-100 bg-blue-200/20 blur-3xl rounded-full" />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
 
-      <div className="max-w-5xl mx-auto px-6 relative z-10">
+        <div className="absolute top-0 left-0 w-[420px] h-[420px] bg-blue-100 rounded-full blur-3xl opacity-50" />
 
-        {/* HEADER */}
-        <div className="text-center mb-10">
+        <div className="absolute bottom-0 right-0 w-[350px] h-[350px] bg-indigo-100 rounded-full blur-3xl opacity-40" />
 
-          <div className="inline-flex items-center gap-2 rounded-full bg-cyan-500/10 px-4 py-1.5 text-sm font-medium text-cyan-600 mb-4">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 animate-pulse" />
-            Got Questions?
+      </div>
+
+      {/* GRID */}
+      <div
+        className="
+          absolute
+          inset-0
+          opacity-[0.03]
+          bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),
+          linear-gradient(to_bottom,#0f172a_1px,transparent_1px)]
+          bg-[size:60px_60px]
+        "
+      />
+
+      <div className="relative z-10 max-w-5xl mx-auto px-6">
+
+        {/* ================= HEADER ================= */}
+
+        <div className="text-center mb-12">
+
+          {/* TITLE */}
+          <motion.h2
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.6,
+            }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight"
+          >
+
+            Frequently{" "}
+
+            <span className="text-blue-600">
+              Asked Questions
+            </span>
+
+          </motion.h2>
+
+          <div className="flex items-center gap-4 mt-8 mb-8 justify-center">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-blue-300"></div>
+            <p className="text-slate-600 text-sm font-medium px-4 whitespace-nowrap">Need Help?</p>
+            <div className="flex-1 h-px bg-gradient-to-l from-transparent to-blue-300"></div>
           </div>
 
-          <h2 className="text-4xl font-bold text-slate-900">
-            Frequently{" "}
-            <span className="text-cyan-500">Asked</span> Questions
-          </h2>
+          {/* DESC */}
+          <motion.p
+            initial={{
+              opacity: 0,
+            }}
+            whileInView={{
+              opacity: 1,
+            }}
+            transition={{
+              delay: 0.2,
+              duration: 0.5,
+            }}
+            viewport={{ once: true }}
+            className="
+              mt-5
+              max-w-2xl
+              mx-auto
+              text-lg
+              leading-relaxed
+              text-slate-600
+            "
+          >
+
+            Everything you need to know about our services, process, payments, and digital solutions.
+
+          </motion.p>
 
         </div>
 
-        {/* FILTER BUTTONS */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        {/* ================= FILTERS ================= */}
+
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.5,
+          }}
+          viewport={{ once: true }}
+          className="
+            flex
+            flex-wrap
+            justify-center
+            gap-3
+            mb-12
+          "
+        >
 
           {categories.map((c) => (
+
             <button
               key={c}
-              onClick={() => setSelectedCategory(c)}
-              className={`px-4 py-1.5 text-sm rounded-full border transition-all duration-300 ${
-                selectedCategory === c
-                  ? "bg-cyan-500 text-white border-cyan-500"
-                  : "bg-white text-slate-600 border-slate-200 hover:border-cyan-400 hover:text-cyan-500"
-              }`}
+              onClick={() =>
+                setSelectedCategory(c)
+              }
+              className={`
+                px-5
+                py-2.5
+                rounded-full
+                text-sm
+                font-medium
+                border
+                transition-all
+                duration-300
+
+                ${
+                  selectedCategory === c
+                    ? "bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/20"
+                    : "bg-white border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600"
+                }
+              `}
             >
+
               {categoryLabels[c]}
+
             </button>
+
           ))}
 
-        </div>
+        </motion.div>
 
-        {/* FAQ LIST */}
+        {/* ================= FAQ GRID ================= */}
+
         <div className="grid md:grid-cols-2 gap-6">
 
           <AnimatePresence mode="wait">
 
             {filtered.map((item) => {
-              const isOpen = openId === item.id;
+              const isOpen =
+                openId === item.id;
 
               return (
+
                 <motion.div
                   key={item.id}
                   layout
-                  className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all duration-300"
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                  }}
+                  viewport={{ once: true }}
+                  whileHover={{
+                    y: -4,
+                  }}
+                  className="
+                    group
+                    relative
+                    overflow-hidden
+                    rounded-[28px]
+                    border
+                    border-slate-200
+                    bg-white
+                    p-6
+                    shadow-sm
+                    hover:shadow-xl
+                    transition-all
+                    duration-300
+                  "
                 >
+
+                  {/* HOVER GLOW */}
+                  <div className="
+                    absolute
+                    inset-0
+                    opacity-0
+                    group-hover:opacity-100
+                    transition-opacity
+                    duration-500
+                    pointer-events-none
+                  ">
+
+                    <div className="
+                      absolute
+                      -top-20
+                      -right-20
+                      w-40
+                      h-40
+                      bg-blue-200/30
+                      blur-3xl
+                      rounded-full
+                    " />
+
+                  </div>
 
                   {/* QUESTION */}
                   <button
-                    onClick={() => toggleQuestion(item.id)}
-                    className="w-full flex justify-between items-start gap-3 text-left"
+                    onClick={() =>
+                      toggleQuestion(item.id)
+                    }
+                    className="
+                      relative
+                      z-10
+                      w-full
+                      flex
+                      justify-between
+                      items-start
+                      gap-4
+                      text-left
+                    "
                   >
 
                     <div className="flex items-start gap-3">
 
-                      <div className="mt-0.5 text-cyan-500">
+                      {/* ICON */}
+                      <div className="
+                        mt-1
+                        flex-shrink-0
+                        w-9
+                        h-9
+                        rounded-xl
+                        bg-blue-50
+                        flex
+                        items-center
+                        justify-center
+                        text-blue-600
+                      ">
+
                         <HelpCircle className="w-4 h-4" />
+
                       </div>
 
-                      {/* ❗ NO HOVER CHANGE ON TEXT */}
-                      <h3 className="text-sm md:text-base font-semibold text-slate-900">
+                      {/* TEXT */}
+                      <h3 className="
+                        text-sm
+                        md:text-base
+                        font-semibold
+                        text-slate-900
+                        leading-relaxed
+                      ">
+
                         {item.q}
+
                       </h3>
 
                     </div>
 
+                    {/* ARROW */}
                     <motion.div
                       variants={rotateIcon}
-                      animate={isOpen ? "open" : "closed"}
-                      className="text-slate-400"
+                      animate={
+                        isOpen
+                          ? "open"
+                          : "closed"
+                      }
+                      className="
+                        flex-shrink-0
+                        text-slate-400
+                        mt-1
+                      "
                     >
-                      <ChevronDown className="w-4 h-4" />
+
+                      <ChevronDown className="w-5 h-5" />
+
                     </motion.div>
 
                   </button>
 
                   {/* ANSWER */}
                   <AnimatePresence initial={false}>
+
                     {isOpen && (
+
                       <motion.div
                         variants={answerVariants}
                         initial="hidden"
@@ -208,16 +461,51 @@ export function FAQ() {
                         exit="exit"
                         className="overflow-hidden"
                       >
-                        <div className="mt-3 pt-3 border-t border-slate-100">
-                          <p className="text-sm text-slate-500 leading-6">
+
+                        <div className="
+                          relative
+                          z-10
+                          mt-4
+                          pt-4
+                          border-t
+                          border-slate-100
+                        ">
+
+                          <p className="
+                            text-sm
+                            leading-7
+                            text-slate-600
+                          ">
+
                             {item.a}
+
                           </p>
+
                         </div>
+
                       </motion.div>
+
                     )}
+
                   </AnimatePresence>
 
+                  {/* BOTTOM BORDER */}
+                  <div className="
+                    absolute
+                    bottom-0
+                    left-0
+                    h-[3px]
+                    w-0
+                    bg-gradient-to-r
+                    from-blue-500
+                    to-indigo-500
+                    group-hover:w-full
+                    transition-all
+                    duration-500
+                  " />
+
                 </motion.div>
+
               );
             })}
 
@@ -227,9 +515,17 @@ export function FAQ() {
 
         {/* NO RESULTS */}
         {filtered.length === 0 && (
-          <div className="text-center py-12 text-slate-500">
+
+          <div className="
+            text-center
+            py-12
+            text-slate-500
+          ">
+
             No questions found for this category.
+
           </div>
+
         )}
 
       </div>

@@ -15,9 +15,10 @@ const data = [
     graphic: {
       type: "bars",
       bars: [40, 65, 85, 55, 70],
-      color: "#06b6d4",
+      color: "#2563eb",
     },
   },
+
   {
     category: "app",
     slug: "/dentallive",
@@ -32,6 +33,7 @@ const data = [
       color: "#3b82f6",
     },
   },
+
   {
     category: "web",
     slug: "/ecommercelive",
@@ -43,9 +45,10 @@ const data = [
     graphic: {
       type: "line",
       values: [20, 45, 35, 70, 55, 85],
-      color: "#06b6d4",
+      color: "#2563eb",
     },
   },
+
   {
     category: "ai",
     slug: "/automationlive",
@@ -56,9 +59,10 @@ const data = [
     tags: ["GPT-4o", "WhatsApp", "Calendar"],
     graphic: {
       type: "pulse",
-      color: "#06b6d4",
+      color: "#2563eb",
     },
   },
+
   {
     category: "app",
     slug: "/saaslive",
@@ -74,6 +78,7 @@ const data = [
       color: "#3b82f6",
     },
   },
+
   {
     category: "brand",
     slug: "/socialarchived",
@@ -84,46 +89,77 @@ const data = [
     tags: ["Meta Ads", "Content", "DM Bot"],
     graphic: {
       type: "wave",
-      color: "#06b6d4",
+      color: "#2563eb",
     },
   },
 ];
 
 const filters = ["all", "web", "app", "ai", "brand"];
 
-// Animation variants
+/* ================= ANIMATIONS ================= */
+
 const headingVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
+
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
   },
 };
 
 const badgeVariants: Variants = {
-  hidden: { scale: 0.8, opacity: 0 },
+  hidden: {
+    scale: 0.8,
+    opacity: 0,
+  },
+
   visible: {
     scale: 1,
     opacity: 1,
-    transition: { delay: 0.1, duration: 0.5, type: "spring" },
+
+    transition: {
+      delay: 0.1,
+      duration: 0.5,
+      type: "spring",
+    },
   },
 };
 
 const filterContainerVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+
   visible: {
     opacity: 1,
     y: 0,
-    transition: { delay: 0.2, duration: 0.5 },
+
+    transition: {
+      delay: 0.2,
+      duration: 0.5,
+    },
   },
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 40 },
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
+
     transition: {
       delay: i * 0.08,
       duration: 0.5,
@@ -132,27 +168,38 @@ const cardVariants: Variants = {
   }),
 };
 
+/* ================= GRAPHICS ================= */
+
 const GraphicBars = ({ bars, color }: any) => (
   <div className="absolute inset-0 flex items-end justify-center gap-1.5 p-5">
+
     {bars.map((height: number, idx: number) => (
+
       <motion.div
         key={idx}
         initial={{ height: 0 }}
         whileInView={{ height: `${height}%` }}
-        transition={{ duration: 0.8, delay: idx * 0.08 }}
+        transition={{
+          duration: 0.8,
+          delay: idx * 0.08,
+        }}
         style={{
           height: `${height}%`,
           backgroundColor: color,
         }}
         className="w-2 rounded-full opacity-80"
       />
+
     ))}
+
   </div>
 );
 
 const GraphicDots = ({ dots, color }: any) => (
   <div className="absolute inset-0 flex items-center justify-center gap-2">
+
     {[...Array(dots)].map((_, idx) => (
+
       <motion.div
         key={idx}
         animate={{
@@ -164,10 +211,14 @@ const GraphicDots = ({ dots, color }: any) => (
           duration: 1.5,
           delay: idx * 0.15,
         }}
-        style={{ backgroundColor: color }}
+        style={{
+          backgroundColor: color,
+        }}
         className="w-2.5 h-2.5 rounded-full"
       />
+
     ))}
+
   </div>
 );
 
@@ -177,9 +228,8 @@ const GraphicLine = ({ values, color }: any) => {
   const points = values
     .map(
       (v: number, i: number) =>
-        `${(i / (values.length - 1)) * 100},${
-          100 - (v / maxVal) * 80
-        }`
+        `${(i / (values.length - 1)) * 100},
+        ${100 - (v / maxVal) * 80}`
     )
     .join(" ");
 
@@ -188,6 +238,7 @@ const GraphicLine = ({ values, color }: any) => {
       className="absolute inset-0 w-full h-full p-5"
       preserveAspectRatio="none"
     >
+
       <motion.polyline
         initial={{ pathLength: 0 }}
         whileInView={{ pathLength: 1 }}
@@ -198,12 +249,14 @@ const GraphicLine = ({ values, color }: any) => {
         strokeLinecap="round"
         points={points}
       />
+
     </svg>
   );
 };
 
 const GraphicPulse = ({ color }: any) => (
   <div className="absolute inset-0 flex items-center justify-center">
+
     <motion.div
       animate={{
         scale: [1, 1.8, 1],
@@ -213,9 +266,12 @@ const GraphicPulse = ({ color }: any) => (
         repeat: Infinity,
         duration: 2,
       }}
-      style={{ backgroundColor: color }}
+      style={{
+        backgroundColor: color,
+      }}
       className="w-12 h-12 rounded-full blur-md"
     />
+
   </div>
 );
 
@@ -227,24 +283,37 @@ const GraphicGrid = ({ rows, cols, color }: any) => (
       gridTemplateColumns: `repeat(${cols},1fr)`,
     }}
   >
+
     {[...Array(rows * cols)].map((_, idx) => (
+
       <motion.div
         key={idx}
-        initial={{ opacity: 0, scale: 0 }}
-        whileInView={{ opacity: 0.7, scale: 1 }}
+        initial={{
+          opacity: 0,
+          scale: 0,
+        }}
+        whileInView={{
+          opacity: 0.7,
+          scale: 1,
+        }}
         transition={{
           delay: idx * 0.03,
           duration: 0.2,
         }}
-        style={{ backgroundColor: color }}
+        style={{
+          backgroundColor: color,
+        }}
         className="rounded-sm"
       />
+
     ))}
+
   </div>
 );
 
 const GraphicWave = ({ color }: any) => (
   <svg className="absolute inset-0 w-full h-full">
+
     <motion.path
       initial={{ pathLength: 0 }}
       whileInView={{ pathLength: 1 }}
@@ -255,6 +324,7 @@ const GraphicWave = ({ color }: any) => (
       strokeLinecap="round"
       d="M0,60 Q20,20 40,40 T80,30 T120,50 T160,35 T200,45"
     />
+
   </svg>
 );
 
@@ -315,22 +385,28 @@ export default function CaseStudies() {
   };
 
   return (
-    <section id="case-studies" className="relative overflow-hidden py-28 bg-[#f8fafc]">
+    <section
+      id="case-studies"
+      className="relative overflow-hidden py-20 bg-[#f8fbff]"
+    >
 
-      {/* LIGHT BACKGROUND GLOWS */}
+      {/* BACKGROUND GLOWS */}
       <div className="absolute inset-0 overflow-hidden">
+
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          className="absolute -top-40 left-0 w-[420px] h-[420px] bg-cyan-200/40 rounded-full blur-3xl"
+          className="absolute -top-40 left-0 w-[420px] h-[420px] bg-blue-100 rounded-full blur-3xl opacity-50"
         />
+
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="absolute bottom-0 right-0 w-[350px] h-[350px] bg-blue-200/30 rounded-full blur-3xl"
+          className="absolute bottom-0 right-0 w-[350px] h-[350px] bg-indigo-100 rounded-full blur-3xl opacity-40"
         />
+
       </div>
 
       {/* GRID */}
@@ -341,12 +417,13 @@ export default function CaseStudies() {
         opacity-[0.03]
         bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)]
         bg-[size:70px_70px]
-        "
+      "
       />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
 
-        {/* TITLE WITH BADGE */}
+        {/* ================= HEADING ================= */}
+
         <motion.div
           variants={headingVariants}
           initial="hidden"
@@ -354,37 +431,41 @@ export default function CaseStudies() {
           viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-14"
         >
-          {/* SMART AUTOMATION STYLE BADGE */}
-          <motion.div
-            variants={badgeVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500/10 to-blue-500/10 px-4 py-1.5 text-sm font-medium text-cyan-600 mb-4"
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 animate-pulse" />
-            Portfolio
-          </motion.div>
 
+          {/* TITLE */}
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+
             Case Studies That{" "}
-            <span className="text-cyan-500">
+
+            <span className="text-blue-600">
               Drive Results
             </span>
+
           </h2>
 
+          <div className="flex items-center gap-4 mt-8 mb-8 justify-center">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-blue-300"></div>
+            <p className="text-slate-600 text-sm font-medium px-4 whitespace-nowrap">Portfolio</p>
+            <div className="flex-1 h-px bg-gradient-to-l from-transparent to-blue-300"></div>
+          </div>
+
+          {/* DESC */}
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
             className="mt-4 text-slate-500 max-w-2xl mx-auto"
           >
+
             Real systems, real growth, and measurable outcomes
             for modern businesses across Pakistan.
+
           </motion.p>
+
         </motion.div>
 
-        {/* FILTERS */}
+        {/* ================= FILTERS ================= */}
+
         <motion.div
           variants={filterContainerVariants}
           initial="hidden"
@@ -392,7 +473,9 @@ export default function CaseStudies() {
           viewport={{ once: true }}
           className="flex flex-wrap justify-center gap-3 mb-14"
         >
+
           {filters.map((f) => (
+
             <motion.button
               key={f}
               whileHover={{ y: -2 }}
@@ -401,10 +484,11 @@ export default function CaseStudies() {
               className={`px-5 py-2.5 rounded-full text-sm font-medium border transition-all
               ${
                 active === f
-                  ? "bg-cyan-500 border-cyan-500 text-white shadow-lg shadow-cyan-500/20"
-                  : "bg-white border-slate-200 text-slate-600 hover:border-cyan-400 hover:text-cyan-500"
+                  ? "bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/20"
+                  : "bg-white border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600"
               }`}
             >
+
               {f === "ai"
                 ? "AI & Automation"
                 : f === "app"
@@ -414,13 +498,19 @@ export default function CaseStudies() {
                 : f === "brand"
                 ? "Brand & Ads"
                 : "All"}
+
             </motion.button>
+
           ))}
+
         </motion.div>
 
-        {/* GRID */}
+        {/* ================= GRID ================= */}
+
         <div className="grid md:grid-cols-3 gap-6">
+
           {filtered.map((item, i) => (
+
             <motion.div
               key={i}
               custom={i}
@@ -430,117 +520,167 @@ export default function CaseStudies() {
               viewport={{ once: true, margin: "-50px" }}
               whileHover={{ y: -6 }}
               className="
-              group
-              relative
-              rounded-[28px]
-              border
-              border-slate-200
-              bg-white
-              p-6
-              shadow-sm
-              hover:shadow-2xl
-              transition-all
-              duration-300
-              flex
-              flex-col
+                group
+                relative
+                rounded-[28px]
+                border
+                border-slate-200
+                bg-white
+                p-6
+                shadow-sm
+                hover:shadow-2xl
+                transition-all
+                duration-300
+                flex
+                flex-col
               "
             >
+
               {/* GRAPHIC AREA */}
               <div
                 className="
-                relative
-                h-28
-                rounded-2xl
-                overflow-hidden
-                border
-                border-slate-200
-                bg-[#071120]
+                  relative
+                  h-28
+                  rounded-2xl
+                  overflow-hidden
+                  border
+                  border-slate-200
+                  bg-[#071120]
                 "
               >
-                {/* DARK GLOW */}
+
+                {/* GLOW */}
                 <div className="absolute inset-0">
-                  <div className="absolute -top-10 left-0 w-28 h-28 bg-cyan-500/20 rounded-full blur-2xl" />
-                  <div className="absolute bottom-0 right-0 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl" />
+
+                  <div className="absolute -top-10 left-0 w-28 h-28 bg-blue-500/20 rounded-full blur-2xl" />
+
+                  <div className="absolute bottom-0 right-0 w-24 h-24 bg-indigo-500/20 rounded-full blur-2xl" />
+
                 </div>
 
                 {renderGraphic(item)}
+
               </div>
 
               {/* META */}
               <div className="mt-5 flex items-center justify-between text-xs">
-                <span className="uppercase tracking-wider font-medium text-cyan-500">
+
+                <span className="uppercase tracking-wider font-medium text-blue-600">
+
                   {item.category}
+
                 </span>
+
                 <span className="text-slate-400">
+
                   {item.year}
+
                 </span>
+
               </div>
 
               {/* TITLE */}
               <h3 className="mt-3 text-lg font-semibold text-slate-900 leading-snug">
+
                 {item.title}
+
               </h3>
 
               {/* DESC */}
               <p className="mt-2 text-sm leading-7 text-slate-600">
+
                 {item.desc}
+
               </p>
 
               {/* STAT */}
-              <div className="mt-4 inline-flex w-fit items-center rounded-full bg-cyan-50 border border-cyan-100 px-3 py-1 text-sm font-medium text-cyan-600">
+              <div
+                className="
+                  mt-4
+                  inline-flex
+                  w-fit
+                  items-center
+                  rounded-full
+                  bg-blue-50
+                  border
+                  border-blue-100
+                  px-3
+                  py-1
+                  text-sm
+                  font-medium
+                  text-blue-600
+                "
+              >
+
                 {item.stat}
+
               </div>
 
               {/* TAGS */}
               <div className="mt-4 flex flex-wrap gap-2">
+
                 {item.tags.map((tag, j) => (
+
                   <span
                     key={j}
                     className="
-                    rounded-full
-                    border
-                    border-slate-200
-                    bg-slate-50
-                    px-3
-                    py-1
-                    text-xs
-                    text-slate-600
+                      rounded-full
+                      border
+                      border-slate-200
+                      bg-slate-50
+                      px-3
+                      py-1
+                      text-xs
+                      text-slate-600
                     "
                   >
+
                     {tag}
+
                   </span>
+
                 ))}
+
               </div>
 
               {/* CTA */}
               <motion.button
                 whileHover={{ x: 4 }}
                 className="
-                mt-6
-                flex
-                items-center
-                gap-2
-                text-sm
-                font-medium
-                text-cyan-500
-                cursor-pointer
+                  mt-6
+                  flex
+                  items-center
+                  gap-2
+                  text-sm
+                  font-medium
+                  text-blue-600
+                  cursor-pointer
                 "
               >
+
                 View case study
+
                 <motion.span
                   whileHover={{ x: 4 }}
-                  transition={{ type: "spring", stiffness: 400 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 400,
+                  }}
                 >
                   →
                 </motion.span>
+
               </motion.button>
 
               {/* HOVER BORDER */}
-              <div className="absolute inset-0 rounded-[28px] border border-transparent group-hover:border-cyan-300 transition-all duration-300" />
+              <div className="absolute inset-0 rounded-[28px] border border-transparent group-hover:border-blue-300 transition-all duration-300" />
 
             </motion.div>
+
           ))}
+
         </div>
+
       </div>
     </section>
   );
