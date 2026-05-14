@@ -97,7 +97,7 @@ export default function ContactForm() {
               <div className="absolute w-[380px] h-[380px] bg-blue-200/40 rounded-full blur-3xl" />
 
               <motion.img
-                src="/contact.png"
+                src="/Contact.png"
                 alt="Contact Illustration"
                 animate={{ y: [0, -12, 0] }}
                 transition={{ duration: 5, repeat: Infinity }}
